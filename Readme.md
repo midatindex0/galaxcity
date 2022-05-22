@@ -1,3 +1,3 @@
-## Galxycuty
+## Galxycity
 
-ayu - testing perms
+Under Development
