@@ -1,3 +1,3 @@
-## Galxycity
+## Galaxycity
 
 Under Development
