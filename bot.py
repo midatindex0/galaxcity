@@ -45,4 +45,4 @@ async def load(ctx,cogss:str=None):
 async def uptime(ctx):
     await ctx.reply(embed=discord.Embed(description="Bot is online since: <t:{0}:F>".format(bot.starttime),color=discord.Color.green()))
 
-bot.run("ODcwNTAxNDM0NTExMjI0ODcy.GsTPXh.xg68VhrMlFkA1gDlHkD7zAEgCve1iVmIMR0-Dw")
+bot.run("ODcwNTAxNDM0NTExMjI0ODcy.GsTPXh.xg68VhrMlFkA1gDlHkD7zAEgCve1iVmIMR0-Dw") # temp token of bot "The Dev Bot"
