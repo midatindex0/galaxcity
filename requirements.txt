@@ -1,1 +1,2 @@
 py-cord==2.0.0rc1
+colorlog==6.6.0
