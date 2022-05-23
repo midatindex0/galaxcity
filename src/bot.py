@@ -60,7 +60,7 @@ async def load(ctx,cogss:str=None):
                 loaded_cogs.append(i)
                 await ctx.send(embed=discord.Embed(description=f"Loaded {i}.py",color=discord.Color.green()))
 
-@cog.command(aliases=["rl"],name="reload",help="Reload cogs")
+@cog.command(aliases=["rl","re"],name="reload",help="Reload cogs")
 @commands.is_owner()
 async def reload(ctx,cogss:str=None):
     if not cogss:
