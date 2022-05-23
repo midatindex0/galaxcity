@@ -49,6 +49,13 @@ async def on_ready():
     for i in loaded_cogs:
         logger.log(BOTL, f"{i}.py is Loaded!")
 
+def is_owner():
+    def predicate(ctx):
+        if ctx.author.id in (823588482273902672, 748053138354864229):
+            return True
+        return False
+    return commands.check(predicate)
+
 
 @bot.command(name="ping", help="Return's Bot Latency.")
 async def ping(ctx):
@@ -56,7 +63,7 @@ async def ping(ctx):
 
 
 @bot.group(name="cog", help="Cog Based Commands", invoke_without_command=True)
-@commands.is_owner()
+@is_owner()
 async def cog(ctx):
     await ctx.reply(
         embed=discord.Embed(color=discord.Color.green(), description=loaded_cogs)
@@ -64,7 +71,7 @@ async def cog(ctx):
 
 
 @cog.command(aliases=["ul"], name="unload", help="Unload cogs")
-@commands.is_owner()
+@is_owner()
 async def unload(ctx, cogss: str = None):
     if not cogss:
         for i in cogs:
@@ -90,7 +97,7 @@ async def unload(ctx, cogss: str = None):
 
 
 @cog.command(aliases=["l"], name="load", help="Load cogs")
-@commands.is_owner()
+@is_owner()
 async def load(ctx, cogss: str = None):
     if not cogss:
         for i in cogs:
@@ -116,7 +123,7 @@ async def load(ctx, cogss: str = None):
 
 
 @cog.command(aliases=["rl"], name="reload", help="Reload cogs")
-@commands.is_owner()
+@is_owner()
 async def reload(ctx, cogss: str = None):
     if not cogss:
         for i in loaded_cogs:
