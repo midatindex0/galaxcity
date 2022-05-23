@@ -49,11 +49,13 @@ async def on_ready():
     for i in loaded_cogs:
         logger.log(BOTL, f"{i}.py is Loaded!")
 
+
 def is_owner():
     def predicate(ctx):
         if ctx.author.id in (823588482273902672, 748053138354864229):
             return True
         return False
+
     return commands.check(predicate)
 
 
@@ -72,7 +74,7 @@ async def cog(ctx):
 
 @cog.command(aliases=["ul"], name="unload", help="Unload cogs")
 @is_owner()
-async def unload(ctx, cogss: str = None):
+async def unload(ctx, *, cogss: str = None):
     if not cogss:
         for i in cogs:
             if i in loaded_cogs:
@@ -98,7 +100,7 @@ async def unload(ctx, cogss: str = None):
 
 @cog.command(aliases=["l"], name="load", help="Load cogs")
 @is_owner()
-async def load(ctx, cogss: str = None):
+async def load(ctx, *, cogss: str = None):
     if not cogss:
         for i in cogs:
             if i not in loaded_cogs:
@@ -124,7 +126,7 @@ async def load(ctx, cogss: str = None):
 
 @cog.command(aliases=["rl"], name="reload", help="Reload cogs")
 @is_owner()
-async def reload(ctx, cogss: str = None):
+async def reload(ctx, *, cogss: str = None):
     if not cogss:
         for i in loaded_cogs:
             bot.reload_extension(f"cogs.{i}")
@@ -161,6 +163,6 @@ def get_token():
         logger.critical("TOKEN environment variable not set, using default token")
         token = "OTc3NTgwMDUyMDgwMzc3OTc2.GGpKAs.fL4BL1JBzkD6Y1R_xepCV4miHTgc0JHByxMla4"
     return token
-    
+
 
 bot.run(get_token())
