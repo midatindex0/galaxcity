@@ -124,15 +124,9 @@ async def load(ctx, *, cogss: str = None):
                 )
 
 
-<<<<<<< HEAD
-@cog.command(aliases=["rl","re"],name="reload",help="Reload cogs")
-@commands.is_owner()
-async def reload(ctx,cogss:str=None):
-=======
 @cog.command(aliases=["rl"], name="reload", help="Reload cogs")
 @is_owner()
 async def reload(ctx, *, cogss: str = None):
->>>>>>> dc008b2d095d19225eb687e4fd157a8de0d781ea
     if not cogss:
         for i in loaded_cogs:
             bot.reload_extension(f"cogs.{i}")
