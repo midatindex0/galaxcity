@@ -1,5 +1,6 @@
-exp.py
+src/exp.py
 env/
 **/__pycache__/
 secrets.txt
 pfp.png
+New.png
