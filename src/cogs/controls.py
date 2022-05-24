@@ -1,16 +1,29 @@
 import discord
 from discord.ext import commands
+
 from PIL import Image,ImageDraw,ImageChops, ImageFont
 
 def circle(pfp):
     size = (270,270)
-    pfp = pfp.resize(size, Image.ANTIALIAS).convert("RGBA")
+    pfp = pfp.resize(
+        size,
+        Image.ANTIALIAS
+    ).convert("RGBA")
     
-    bigsize = (pfp.size[0] * 3, pfp.size[1] * 3)
+    bigsize = (
+        pfp.size[0] * 3,
+        pfp.size[1] * 3
+    )
     mask = Image.new('L', bigsize, 0)
     draw = ImageDraw.Draw(mask) 
-    draw.ellipse((0, 0) + bigsize, fill=255)
-    mask = mask.resize(pfp.size, Image.ANTIALIAS)
+    draw.ellipse(
+        (0, 0) + bigsize,
+        fill=255
+    )
+    mask = mask.resize(
+        pfp.size,
+        Image.ANTIALIAS
+    )
     mask = ImageChops.darker(mask, pfp.split()[-1])
     pfp.putalpha(mask)
     return pfp
@@ -28,12 +41,12 @@ def get_profile(self,member:discord.Member,level,fails,score,hint_used):
             text=f"User Id",
             font=font,
             fill=color
-            )
+        )
         # 48,392
         name=str(member)
         font2=ImageFont.truetype("asset/fonts/font.ttf",62)
-        if len(name)>16:
-            name=f"{name[0:16]}..."
+        if len(name)>16:name=f"{name[0:16]}..."
+        
         draw.text(
             xy=(48,392),
             text=name,
