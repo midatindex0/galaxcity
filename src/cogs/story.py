@@ -21,5 +21,6 @@ class Story(commands.Cog):
         )
         await ctx.reply(embed=em)
 
+
 def setup(bot):
     bot.add_cog(Story(bot))

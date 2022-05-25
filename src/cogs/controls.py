@@ -86,6 +86,7 @@ def get_profile(self,member:discord.Member,level,fails,score,hint_used):
 
         return bg
 
+
 class Controls(commands.Cog):
     """
     ALL THE COMMANDS AND EVENTS RELATED TO CONTROLS
