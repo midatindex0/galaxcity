@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 
 class Story(commands.Cog):
+    """THE STORY OF BOT THAT WILL BE SENT BY THE BOT!"""
     def __init__(self,bot):
         self.bot=bot
     
@@ -19,6 +20,7 @@ class Story(commands.Cog):
             icon_url=self.bot.user.display_avatar
         )
         await ctx.reply(embed=em)
+
 
 def setup(bot):
     bot.add_cog(Story(bot))
