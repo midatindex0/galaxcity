@@ -2,3 +2,5 @@ exp.py
 env/
 **/__pycache__/
 secrets.txt
+src/test.py
+config/config.py
