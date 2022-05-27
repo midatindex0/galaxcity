@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from .levels import level1, l1
+
 class Story(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
@@ -19,6 +21,14 @@ class Story(commands.Cog):
             icon_url=self.bot.user.display_avatar
         )
         await ctx.reply(embed=em)
+
+    @commands.command(name="play", help="Play the galaxcity game")
+    async def play(self, ctx):
+        user = await self.bot.database.fetch_user(ctx.author.id)
+        if user.level == 1:
+            if await l1.start(ctx):
+                user.level += 1
+        await self.bot.database.update_user(user)
 
 def setup(bot):
     bot.add_cog(Story(bot))
