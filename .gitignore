@@ -4,3 +4,4 @@ env/
 secrets.txt
 src/test.py
 config/config.py
+src/cogs/levels/level1.py
