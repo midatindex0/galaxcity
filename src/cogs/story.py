@@ -1,9 +1,10 @@
 import discord
 from discord.ext import commands
 
-from .levels import level1, l1
+from .levels import l1
 
 class Story(commands.Cog):
+    """THE STORY OF BOT THAT WILL BE SENT BY THE BOT!"""
     def __init__(self,bot):
         self.bot=bot
     
