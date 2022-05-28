@@ -1,4 +1,4 @@
-# Galaxycity
+# Galaxcity
 
 ## Run bot
 

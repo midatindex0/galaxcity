@@ -6,7 +6,8 @@ import colorlog, logging
 import discord
 from discord.ext import commands
 
-from config.config import BOT_LOG_LEVEL as BOTL, LOG_LEVEL
+from database.database import Database, Utils
+from config.config import BOT_LOG_LEVEL as BOTL, LOG_LEVEL, _MONGO_URI
 
 logging.addLevelName(BOTL, "BOT")
 handler = colorlog.StreamHandler()
@@ -37,6 +38,18 @@ bot = commands.Bot(
         type=discord.ActivityType.watching, name="my development."
     ),
 )
+
+def connect_db():
+    bot.database = Database(_MONGO_URI)
+    logger.log(BOTL, "Connected with database")
+
+def set_theme():
+    bot.primary_theme = 0xd82ce8
+    bot.fail = 0xe8452c
+    bot.success = 0x1fdd48
+    logger.log(BOTL, "Configured bot themes")
+
+
 bot.starttime = int(time.time())
 for i in cogs:
     bot.load_extension(f"cogs.{i}")
@@ -46,6 +59,8 @@ for i in cogs:
 @bot.event
 async def on_ready():
     logger.log(BOTL, "Logged in as: {0}".format(bot.user))
+    connect_db()
+    set_theme()
     for i in loaded_cogs:
         logger.log(BOTL, f"{i}.py is Loaded!")
 
@@ -55,8 +70,14 @@ def is_owner():
         if ctx.author.id in (823588482273902672, 748053138354864229):
             return True
         return False
-
     return commands.check(predicate)
+
+@bot.check
+async def check_user_in_db(ctx):
+    user = await bot.database.fetch_user(ctx.author.id)
+    if not user:
+        await bot.database.init_user(Utils.create_user(ctx.author.id))
+    return True
 
 
 @bot.command(name="ping", help="Return's Bot Latency.")

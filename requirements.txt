@@ -1,3 +1,5 @@
 py-cord==2.0.0rc1
 colorlog==6.6.0
+motor>=2.5.1
+pymongo[srv]
 Pillow 9.1.1 
