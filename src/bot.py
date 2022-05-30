@@ -28,7 +28,7 @@ logger = colorlog.getLogger()
 logger.setLevel(LOG_LEVEL)
 logger.addHandler(handler)
 
-cogs = ["story","controls","info"]
+cogs = ["story","controls","info", "credits"]
 loaded_cogs = []
 bot = commands.Bot(
     command_prefix="g!",
