@@ -1,4 +1,3 @@
-from pydoc import visiblename
 import random
 
 import discord
@@ -263,7 +262,7 @@ async def start(ctx: Context):
                 color=ctx.bot.primary_theme,
             )
             .set_image(
-                url="https://cdn.discordapp.com/attachments/900369794489016380/978914828573884426/letter.png"
+                url="https://media.discordapp.net/attachments/978473001991413801/979953075190120479/letter.png?width=279&height=395"
             )
             .set_footer(
                 text="Password: bnVtYmVycyBpbiB0aGUgbGV0dGVyIHBsYWNlZCBzZXJpYWxseQ=="

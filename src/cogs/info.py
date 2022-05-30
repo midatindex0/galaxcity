@@ -59,20 +59,13 @@ class Info(commands.Cog):
             async with session.get('https://api.nasa.gov/planetary/apod?api_key=1VPdcmokG1qNJ7wv3VC2H8SQS48OXfytFBtEnRkC') as response:
                 json = await response.json()
             em=discord.Embed(
-                description="Picture of the Day",
+                title=json["title"],
+                description=json["explanation"][:2048],
                 color=discord.Color.random(),
                 timestamp=ctx.message.created_at
             ).add_field(
-                name="Title",
-                value=json["title"],
-                inline=False
-            ).add_field(
                 name="Date",
                 value=json["date"],
-                inline=False
-            ).add_field(
-                name="Explanation",
-                value=json["explanation"],
                 inline=False
             ).add_field(
                 name="URL",
