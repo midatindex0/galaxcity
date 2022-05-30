@@ -17,3 +17,13 @@ l1_c2_conti = {
     "title": "Level 1 - Chapetr IV: On a Mission - Continued...",
     "description": "As you went deep down the dimly lit pathway, you noticed shadow faced gusrds standing like statues. With guns loaded and peaking at you from the corner. Finally you reached a thick **metal gate**. It wants a **password**. A guard is looking at you suspiciously. You must hurry up. **What should be the password?**"
 }
+
+l2_c1 = {
+    "title": "Level 2 - Chapter I: Basement Astronomer",
+    "description": "The metal gate opened and you saw something you never had imagined. You stepped inside and the door closed behind you.**It was the top of a rocket with its body even deeper underground**. By now Xilon has already realised what you have done and you have ony one option left. Board the rocket and let it decide your fate. You got on the rocket and secured yourself to the seat."
+}
+
+l2_c2 = {
+    "title": "Level 2 - Chapter III: Danger Roks",
+    "description": "You felt vibrations, and before you could even think, you saw the roof wide open through the rocket's camera. The rocket zoomed out with great thrust and you lost vision of the horizon within seconds.\n\nIt was no orginary rocket, it was a super secret rocket space Y was working on for decades. It could travel at almost the speed of light.\nYou zoon past fucking solar system planets and the rocket slowed down somewhere in the middle of wacky milk galaxy.\n**The rader is showing asteroids towards near your rocket. Your task is navigate the rocket according to the map.**"
+}

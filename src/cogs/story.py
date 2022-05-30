@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from .levels import l1
+from .levels import l1, l2
 
 class Story(commands.Cog):
     """THE STORY OF BOT THAT WILL BE SENT BY THE BOT!"""
@@ -29,6 +29,15 @@ class Story(commands.Cog):
         if user.level == 1:
             if await l1.start(ctx):
                 user.level += 1
+        elif user.level == 2:
+            if await l2.start(ctx):
+                user.level += 1
+        else:
+            await ctx.send(embed=discord.Embed(
+                title="You have completed all levels.",
+                description="Use g!reset to reset your level, tries and score.",
+                color=ctx.bot.primary_theme
+            ))
         await self.bot.database.update_user(user)
 
 def setup(bot):

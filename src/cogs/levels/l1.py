@@ -1,4 +1,3 @@
-from pydoc import visiblename
 import random
 
 import discord
