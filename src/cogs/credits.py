@@ -14,26 +14,31 @@ class Credits(commands.Cog):
                 "id": 823588482273902672,
                 "message": "Developing the bot, testing it,creating and adding levels, handling database.",
                 "role": "Lead Developer",
+                "color": 0x353635,
             },
             "ayu": {
                 "id": 748053138354864229,
                 "message": "Developing the bot, testing it, creaing API related commands, help commands, misc commands",
                 "role": "Co-Developer",
+                "color": 0xcc85ff
             },
             "tapu": {
                 "id": 673105565689446409,
                 "message": "Testing the bot, spamming commands, suggested to add map in `iss` command",
                 "role": "Suggesstion Giver",
+                "color": 0x85dcff
             },
             "andreaw": {
                 "id": 724275771278884906,
                 "message": "Testing the bot, Giving useful suggestions",
                 "role": "Tester",
+                "color": 0xfffd75
             },
             "arthex": {
                 "id": 870635915461156917,
                 "message": "Testing the bot, giving useful suggestions",
                 "role": "Tester",
+                "color": 0xffd899
             },
         }
 
@@ -59,7 +64,7 @@ class Credits(commands.Cog):
                             Embed(
                                 title=user.name,
                                 description=value["message"],
-                                color= user.accent_color,
+                                color= value["color"],
                             )
                             .set_thumbnail(url=user.avatar.url)
                             .add_field(name="Role", value=value["role"])
