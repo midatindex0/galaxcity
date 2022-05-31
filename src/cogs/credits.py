@@ -38,7 +38,7 @@ class Credits(commands.Cog):
         }
 
     @commands.command(
-        name="credits", aliases=["creds"], help="People who made this bot possible"
+        name="credits", aliases=["creds","credit","cred"], help="People who made this bot possible"
     )
     async def credits(self, ctx):
         pages = [
@@ -59,7 +59,7 @@ class Credits(commands.Cog):
                             Embed(
                                 title=user.name,
                                 description=value["message"],
-                                color=discord.Color.random(),
+                                color= user.accent_color,
                             )
                             .set_thumbnail(url=user.avatar.url)
                             .add_field(name="Role", value=value["role"])

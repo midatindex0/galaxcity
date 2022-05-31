@@ -23,7 +23,7 @@ class Story(commands.Cog):
         )
         await ctx.reply(embed=em)
 
-    @commands.command(name="play", help="Play the galaxcity game")
+    @commands.command(name="play", help="Play the galaxcity game",aliases=["p"])
     async def play(self, ctx):
         user = await self.bot.database.fetch_user(ctx.author.id)
         if user.level == 1:

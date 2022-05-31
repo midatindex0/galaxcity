@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 
-from PIL import Image, ImageDraw, ImageChops, ImageFont
+from io import BytesIO
+from PIL import Image,ImageDraw,ImageChops, ImageFont
 
 
 def circle(pfp):
@@ -17,46 +18,83 @@ def circle(pfp):
     pfp.putalpha(mask)
     return pfp
 
+async def get_profile(member:discord.Member,level,fails,score):
+        av = member.display_avatar
+        data = BytesIO(await av.read())
+        pfp = Image.open(data)
+        pfp=circle(pfp)
+        color="#ffffff"
+        bg=Image.open("src/asset/imgs/bg.png")
+        bg.paste(pfp,(17,67),pfp)
+        font=ImageFont.truetype("src/asset/fonts/font.ttf",104)
+        # 330,135
+        draw=ImageDraw.Draw(bg)
+        draw.text(
+            xy=(330,135),
+            text=f"User Id",
+            font=font,
+            fill=color
+        )
+        # 48,392
+        name=str(member)
+        font2=ImageFont.truetype("src/asset/fonts/font.ttf",62)
+        if len(name)>16:name=f"{name[0:16]}..."
+        
+        draw.text(
+            xy=(48,392),
+            text=name,
+            font=font2,
+            fill=color
+        )
 
-def get_profile(self, member: discord.Member, level, fails, score, hint_used):
-    pfp = circle(member.avatar)
-    color = "#ffffff"
-    bg = Image.open("asset/img/bg.png")
-    bg.paste(pfp, (17, 67), pfp)
-    font = ImageFont.truetype("asset/fonts/font.ttf", 104)
-    # 330,135
-    draw = ImageDraw.Draw(bg)
-    draw.text(xy=(330, 135), text=f"User Id", font=font, fill=color)
-    # 48,392
-    name = str(member)
-    font2 = ImageFont.truetype("asset/fonts/font.ttf", 62)
-    if len(name) > 16:
-        name = f"{name[0:16]}..."
+        font3=ImageFont.truetype("src/asset/fonts/font.ttf",105)
+        # 90,585
+        draw.text(
+            xy=(90,585),
+            text=str(level),
+            font=font3,
+            fill=color
+        )
 
-    draw.text(xy=(48, 392), text=name, font=font2, fill=color)
+        draw.text(
+            xy=(90,735),
+            text=str(fails),
+            font=font3,
+            fill=color
+        )
 
-    font3 = ImageFont.truetype("asset/fonts/font.ttf", 105)
-    # 90,585
-    draw.text(xy=(90, 585), text=str(level), font=font3, fill=color)
+        draw.text(
+            xy=(90,1035),
+            text=str(score),
+            font=font3,
+            fill=color
+        )
 
-    draw.text(xy=(90, 735), text=str(fails), font=font3, fill=color)
-
-    draw.text(xy=(90, 885), text=str(hint_used), font=font3, fill=color)
-
-    draw.text(xy=(90, 1035), text=str(score), font=font3, fill=color)
-
-    return bg
-
+        return bg
 
 class Controls(commands.Cog):
     """
     ALL THE COMMANDS AND EVENTS RELATED TO CONTROLS
     """
+    def __init__(self,bot:commands.Bot):
+        self.bot=bot
+    
+    @commands.command(name="profile",aliases=["prof","id","pf"])
+    async def profile(self,ctx:commands.Context):
+        """
+        Profile Command
+        """
+        user = await self.bot.database.fetch_user(ctx.author.id)
+        level = f"Level: {user.level}"
+        tries = f"Tries: {user.tries}"
+        score = f"Score: {user.score}"
+        profile = await get_profile(member=ctx.author,level=level,fails=tries,score=score)
+        with BytesIO() as image_binary:
+            profile.save(image_binary, 'PNG')
+            image_binary.seek(0)
+            await ctx.send(file=discord.File(image_binary,"profile.png"))
 
-    def __init__(self, bot: commands.Bot):
-        self.bot = bot
-
-    @commands.command(name="reset", help="Get the location of the ISS")
+    @commands.command(name="reset", help="Reset your level, tries and score.",aliases=["r"])
     async def reset(self, ctx):
         user = await self.bot.database.fetch_user(ctx.author.id)
         user.level = 1

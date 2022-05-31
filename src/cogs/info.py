@@ -6,7 +6,7 @@ class Info(commands.Cog):
     def __init__(self,bot:commands.Bot):
         self.bot=bot
     
-    @commands.command(name="locate",aliases=["iss"],help="Get the location of the ISS")
+    @commands.command(name="locate",aliases=["iss","location","loc"],help="Get the location of the ISS")
     async def locate(self,ctx):
         """
         GET THE LOCATION OF THE ISS
@@ -52,7 +52,7 @@ class Info(commands.Cog):
         )
         await ctx.send(embed=em)
         
-    @commands.command(name="picture-of-the-day",aliases=["potd"],help="Get the picture of the day for NASA")
+    @commands.command(name="pic-of-day",aliases=["potd","pod","picture-of-the-day","picofday"],help="Get the picture of the day for NASA")
     async def potd(self,ctx):
         """GET THE PICTURE OF THE DAY FOR NASA """
         async with aiohttp.ClientSession() as session:
