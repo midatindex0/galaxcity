@@ -20,37 +20,39 @@ class Credits(commands.Cog):
                 "id": 748053138354864229,
                 "message": "Developing the bot, testing it, creaing API related commands, help commands, misc commands",
                 "role": "Co-Developer",
-                "color": 0xcc85ff
+                "color": 0xCC85FF,
             },
             "tapu": {
                 "id": 673105565689446409,
                 "message": "Testing the bot, spamming commands, suggested to add map in `iss` command",
                 "role": "Suggesstion Giver",
-                "color": 0x85dcff
+                "color": 0x85DCFF,
             },
             "andreaw": {
                 "id": 724275771278884906,
                 "message": "Testing the bot, Giving useful suggestions",
                 "role": "Tester",
-                "color": 0xfffd75
+                "color": 0xFFFD75,
             },
             "arthex": {
                 "id": 870635915461156917,
                 "message": "Testing the bot, giving useful suggestions",
                 "role": "Tester",
-                "color": 0xffd899
+                "color": 0xFFD899,
             },
         }
 
     @commands.command(
-        name="credits", aliases=["creds","credit","cred"], help="People who made this bot possible"
+        name="credits",
+        aliases=["creds", "credit", "cred"],
+        help="People who made this bot possible",
     )
     async def credits(self, ctx):
         pages = [
             Page(
                 embeds=[
                     Embed(
-                        title="This is the list of people who helped make this bot possible",
+                        title="This is the list of people who helped make this bot possible", color=discord.Color.random()
                     ).set_image(url="https://share.creavite.co/Lv2Sds8xi2gFBakY.gif")
                 ]
             )
@@ -64,7 +66,7 @@ class Credits(commands.Cog):
                             Embed(
                                 title=user.name,
                                 description=value["message"],
-                                color= value["color"],
+                                color=value["color"],
                             )
                             .set_thumbnail(url=user.avatar.url)
                             .add_field(name="Role", value=value["role"])

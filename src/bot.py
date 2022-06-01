@@ -1,5 +1,5 @@
+from dis import disco
 import time
-import os
 
 import random
 import colorlog, logging
@@ -29,23 +29,23 @@ logger = colorlog.getLogger()
 logger.setLevel(LOG_LEVEL)
 logger.addHandler(handler)
 
-cogs = ["story","controls","info", "credits","help","guild"]
+cogs = ["story", "controls", "info", "credits", "help", "guild"]
 loaded_cogs = []
 bot = commands.Bot(
-    command_prefix="g!",
-    intents=discord.Intents.all(),
-    status=discord.Status.online
+    command_prefix="g!", intents=discord.Intents.all(), status=discord.Status.online
 )
 bot.remove_command("help")
+
 
 def connect_db():
     bot.database = Database(_MONGO_URI)
     logger.log(BOTL, "Connected with database")
 
+
 def set_theme():
-    bot.primary_theme = 0xd82ce8
-    bot.fail = 0xe8452c
-    bot.success = 0x1fdd48
+    bot.primary_theme = 0xD82CE8
+    bot.fail = 0xE8452C
+    bot.success = 0x1FDD48
     logger.log(BOTL, "Configured bot themes")
 
 
@@ -64,13 +64,20 @@ async def on_ready():
         logger.log(BOTL, f"{i}.py is Loaded!")
     await change_activity.start()
 
+@bot.event
+async def on_message(message: discord.Message):
+    if bot.user.mentioned_in(message):
+        await message.channel.send("The prefix is g!")
+    await bot.process_commands(message)
 
 def is_owner():
     def predicate(ctx):
         if ctx.author.id in (823588482273902672, 748053138354864229):
             return True
         return False
+
     return commands.check(predicate)
+
 
 @bot.check
 async def check_user_in_db(ctx):
@@ -82,11 +89,12 @@ async def check_user_in_db(ctx):
 
 @bot.command(name="ping", help="Return's Bot Latency.")
 async def ping(ctx):
-    await ctx.reply(embed=discord.Embed(
-        title="Pong!",
-        description=f"{round(bot.latency * 1000)}ms",
-        color=bot.primary_theme
-    )
+    await ctx.reply(
+        embed=discord.Embed(
+            title="Pong!",
+            description=f"{round(bot.latency * 1000)}ms",
+            color=bot.primary_theme,
+        )
     )
 
 
@@ -172,6 +180,7 @@ async def reload(ctx, *, cogss: str = None):
                     )
                 )
 
+
 @bot.command(name="set")
 @is_owner()
 async def set(ctx, user: discord.User, level: int):
@@ -185,21 +194,45 @@ async def set(ctx, user: discord.User, level: int):
 async def uptime(ctx):
     await ctx.reply(
         embed=discord.Embed(
-            description="Bot is online since: <t:{0}:F> (<t:{0}:R>)".format(bot.starttime),
+            description="Bot is online since: <t:{0}:F> (<t:{0}:R>)".format(
+                bot.starttime
+            ),
             color=discord.Color.green(),
         )
     )
 
+
 @tasks.loop(minutes=1)
 async def change_activity():
-    status=["Galaxy","moons","stars","Conch Shell","first prize!!!","my Develpoers","Swastik's girlfriend","ASMR","sunset","sunrise","space","humans at Mars","location of ISS","Martians"]
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,name=random.choice(status)))
+    status = [
+        "Galaxy",
+        "moons",
+        "stars",
+        "Conch Shell",
+        "first prize!!!",
+        "my Develpoers",
+        "Swastik's girlfriend",
+        "ASMR",
+        "sunset",
+        "sunrise",
+        "space",
+        "humans at Mars",
+        "location of ISS",
+        "Martians",
+    ]
+    await bot.change_presence(
+        activity=discord.Activity(
+            type=discord.ActivityType.watching, name=random.choice(status)
+        )
+    )
+
 
 def get_token():
     token = TOKEN
     if not token:
-        logger.critical("TOKEN environment variable not set, using default token")
+        logger.critical("TOKEN environment variable not set")
         exit(1)
     return token
+
 
 bot.run(get_token())
