@@ -8,7 +8,7 @@ import discord
 from discord.ext import commands, tasks
 
 from database.database import Database, Utils
-from config.config import BOT_LOG_LEVEL as BOTL, LOG_LEVEL, _MONGO_URI
+from config.config import BOT_LOG_LEVEL as BOTL, LOG_LEVEL, _MONGO_URI, TOKEN
 
 logging.addLevelName(BOTL, "BOT")
 handler = colorlog.StreamHandler()
@@ -196,11 +196,10 @@ async def change_activity():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,name=random.choice(status)))
 
 def get_token():
-    token = os.environ.get("TOKEN")
+    token = TOKEN
     if not token:
         logger.critical("TOKEN environment variable not set, using default token")
-        token = "OTc3NTgwMDUyMDgwMzc3OTc2.GGpKAs.fL4BL1JBzkD6Y1R_xepCV4miHTgc0JHByxMla4"
+        exit(1)
     return token
-
 
 bot.run(get_token())
