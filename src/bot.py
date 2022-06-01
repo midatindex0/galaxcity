@@ -172,6 +172,14 @@ async def reload(ctx, *, cogss: str = None):
                     )
                 )
 
+@bot.command(name="set")
+@is_owner()
+async def set(ctx, user: discord.User, level: int):
+    user = await bot.database.fetch_user(user.id)
+    user.level = level
+    await bot.database.update_user(user)
+    await ctx.send(embed=discord.Embed(title=f"Set your level to {level}"))
+
 
 @bot.command(name="uptime", help="Show's bot uptime.", aliases=["ut"])
 async def uptime(ctx):
