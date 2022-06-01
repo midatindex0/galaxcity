@@ -1,10 +1,11 @@
 import time
 import os
 
+import random
 import colorlog, logging
 
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 from database.database import Database, Utils
 from config.config import BOT_LOG_LEVEL as BOTL, LOG_LEVEL, _MONGO_URI
@@ -28,16 +29,14 @@ logger = colorlog.getLogger()
 logger.setLevel(LOG_LEVEL)
 logger.addHandler(handler)
 
-cogs = ["story","controls","info", "credits"]
+cogs = ["story","controls","info", "credits","help","guild"]
 loaded_cogs = []
 bot = commands.Bot(
     command_prefix="g!",
     intents=discord.Intents.all(),
-    status=discord.Status.idle,
-    activity=discord.Activity(
-        type=discord.ActivityType.watching, name="my development."
-    ),
+    status=discord.Status.online
 )
+bot.remove_command("help")
 
 def connect_db():
     bot.database = Database(_MONGO_URI)
@@ -63,6 +62,7 @@ async def on_ready():
     set_theme()
     for i in loaded_cogs:
         logger.log(BOTL, f"{i}.py is Loaded!")
+    await change_activity.start()
 
 
 def is_owner():
@@ -82,7 +82,12 @@ async def check_user_in_db(ctx):
 
 @bot.command(name="ping", help="Return's Bot Latency.")
 async def ping(ctx):
-    await ctx.reply("Pong!")
+    await ctx.reply(embed=discord.Embed(
+        title="Pong!",
+        description=f"{round(bot.latency * 1000)}ms",
+        color=bot.primary_theme
+    )
+    )
 
 
 @bot.group(name="cog", help="Cog Based Commands", invoke_without_command=True)
@@ -167,16 +172,28 @@ async def reload(ctx, *, cogss: str = None):
                     )
                 )
 
+@bot.command(name="set")
+@is_owner()
+async def set(ctx, user: discord.User, level: int):
+    user = await bot.database.fetch_user(user.id)
+    user.level = level
+    await bot.database.update_user(user)
+    await ctx.send(embed=discord.Embed(title=f"Set your level to {level}"))
+
 
 @bot.command(name="uptime", help="Show's bot uptime.", aliases=["ut"])
 async def uptime(ctx):
     await ctx.reply(
         embed=discord.Embed(
-            description="Bot is online since: <t:{0}:F>".format(bot.starttime),
+            description="Bot is online since: <t:{0}:F> (<t:{0}:R>)".format(bot.starttime),
             color=discord.Color.green(),
         )
     )
 
+@tasks.loop(minutes=1)
+async def change_activity():
+    status=["Galaxy","moons","stars","Conch Shell","first prize!!!","my Develpoers","Swastik's girlfriend","ASMR","sunset","sunrise","space","humans at Mars","location of ISS","Martians"]
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,name=random.choice(status)))
 
 def get_token():
     token = os.environ.get("TOKEN")

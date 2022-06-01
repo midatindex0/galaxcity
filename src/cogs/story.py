@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from .levels import l1, l2
+from .levels import l1, l2, l3
 
 class Story(commands.Cog):
     """THE STORY OF BOT THAT WILL BE SENT BY THE BOT!"""
@@ -31,6 +31,9 @@ class Story(commands.Cog):
                 user.level += 1
         elif user.level == 2:
             if await l2.start(ctx):
+                user.level += 1
+        elif user.level == 3:
+            if await l3.start(ctx):
                 user.level += 1
         else:
             await ctx.send(embed=discord.Embed(
